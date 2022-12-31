@@ -16,6 +16,8 @@ Route::get('/admin-login',[LoginController::class,'adminLogin'])->name('admin.lo
 Route::group(['namespace' => 'App\Http\Controllers\Admin', 'middleware' => 'is_admin'], function(){
     Route::get('admin/home',[AdminController::class,'admin'])->name('admin.home');
     Route::get('admin/logout',[AdminController::class,'logout'])->name('admin.logout');
+    Route::get('admin/password/change',[AdminController::class,'Password_Change'])->name('admin.password.change');
+    Route::post('admin/password/update',[AdminController::class,'Password_Update'])->name('admin.password.update');
 
     // Category routes
     Route::group(['prefix'=>'category'],function(){
@@ -48,8 +50,8 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'middleware' => 'is_a
     Route::group(['prefix'=>'brand'],function(){
         Route::get('/',[BrandController::class,'index'])->name('brand.index');
         Route::post('/store',[BrandController::class,'store'])->name('brand.store');
-        // Route::get('/delete/{id}',[ChildcategoryController::class,'destroy'])->name('childcategory.delete');
-        // Route::get('/edit/{id}',[ChildcategoryController::class,'edit']);
-        // Route::post('update/',[ChildcategoryController::class,'update'])->name('childcategory.update');
+        Route::get('/delete/{id}',[BrandController::class,'destroy'])->name('brand.delete');
+        Route::get('/edit/{id}',[BrandController::class,'edit']);
+        Route::post('update/',[BrandController::class,'update'])->name('brand.update');
     });
 });
