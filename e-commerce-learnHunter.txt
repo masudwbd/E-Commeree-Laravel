@@ -1,0 +1,74 @@
+/*--------------------------------------------------------*/
+
+    1.Lets Install Laravel new project.
+    2. Lets Install some packages for our work purphase..
+        2.1-> yajra data table.->for collecting huge data in database
+        2.2-> image intervention.->for resizing images
+        2.3-> bumbummen99/shopingcart.->for add cart
+        2.4-> laravel/ui->for laravel authentication
+            2.4.1-> php artisan ui bootstrap
+            2.4.2-> php artisan ui bootstrap --auth
+            2.4.3-> npm install && npm run dev
+
+    3. Multiauth..
+        3.1-> create a database in phpmyadmin & connect in .env file of laravel project.
+        3.2-> laravel->database->migration->users->
+                phone & is_admin field add kori && models->user->$fillable-> 'phone','is_admin' add kori && php artisan migrate..
+        3.3-> routes a admin route er jonno alada file banai->admin.php && providers->Routeserviceprovider-> Route::middleware('web')
+                        ->group(base_path('routes/admin.php'));
+
+        3.4-> Lets make a middleware and inside its function->
+            if(auth()->user()->is_admin == 1){
+                    return $next($request);
+                }
+                return redirect()->route('home')->with('error','You are not a admin');
+        3.5-> admin er jonno route,function resources a admin folder->admin.blade.php create kori.
+        3.6-> app->http->auth->loginController->
+            public function login(Request $request){
+                $validated = $request->validate([
+                    'email' => 'required|email',
+                    'password' => 'required',
+                ]);
+                if(auth()->attempt(array('email' => $request->email, 'password' => $request->password))){
+                    if(auth()->user()->is_admin == 1){
+                        return redirect()->route('admin.home');
+                    }else{
+                        return redirect()->route('home');
+                    }
+                }else{
+                    return redirect()->back()->with('error','Invalid Email or Password');
+                }
+            }
+
+    
+    4. Mastering Admin Panel..
+
+    5. Connect MailTrap in Project..
+
+    6. For alert message lets use sweetalert && toastr..
+
+    7. Lets Make AdminController for Admin.. And Make Route::group in this AdminController && make admin logout function...3.3 er route gulu group er vitor nei;
+
+    8. lets have category data table controller and model..then lets add,delete,edit category.In category data table lets have 2 input field->'category_name','category_slug';
+
+    and in model lets put fillable data...
+
+    9. lets have subcategory data table controller and model..then lets crud it.In subcategory data table lets have input fields->
+     $table->unsignedBigInteger('category_id');
+            $table->string('subcategory_name');
+            $table->string('subcat_slug')->nullable();
+            $table->timestamps();
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade'); 
+
+            and in model lets put fillable data...
+            subcategory will be join with category;
+
+    10. lets have childcategory data table controller and model..then lets crud it.In childcategory data table lets have input fields->
+        $table->unsignedBigInteger('category_id');
+            $table->unsignedBigInteger('subcategory_id');
+            $table->string('childcategory_name');
+            $table->string('childcategory_slug');
+            $table->timestamps();
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->foreign('subcategory_id')->references('id')->on('subcategories')->onDelete('cascade');
+/*--------------------------------------------------------*/
