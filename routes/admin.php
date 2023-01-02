@@ -7,7 +7,10 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ChildcategoryController;
 use App\Http\Controllers\Admin\SubcategoryController;
 use App\Http\Controllers\Admin\BrandController;
+use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\PageController;
 
+use App\Http\Controllers\SettingsController;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/admin/home',[HomeController::class,'admin'])->name('admin.home')->middleware('is_admin');
@@ -53,5 +56,28 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'middleware' => 'is_a
         Route::get('/delete/{id}',[BrandController::class,'destroy'])->name('brand.delete');
         Route::get('/edit/{id}',[BrandController::class,'edit']);
         Route::post('update/',[BrandController::class,'update'])->name('brand.update');
+    });
+
+    // Settings routes
+    Route::group(['prefix'=>'settings'],function(){
+        //seo settings
+        Route::group(['prefix'=>'seo'],function(){
+            Route::get('/',[SettingController::class,'seo'])->name('seo.setting');
+            Route::post('/update/{id}',[SettingController::class,'update'])->name('seo.setting.update');
+        });
+        //smtp settings
+        Route::group(['prefix'=>'smtp'],function(){
+            Route::get('/',[SettingController::class,'smtp'])->name('smtp.setting');
+            Route::post('/update/{id}',[SettingController::class,'smtp_update'])->name('smtp.setting.update');
+        });
+        //page settings
+        Route::group(['prefix'=>'page'],function(){
+            Route::get('/',[PageController::class,'index'])->name('page.index');
+            Route::get('create/',[PageController::class,'create'])->name('page.create');
+            Route::post('store/',[PageController::class,'store'])->name('page.store');
+            Route::get('delete/{id}/',[PageController::class,'destroy'])->name('page.delete');
+            Route::get('edit/{id}/',[PageController::class,'edit'])->name('page.edit');
+            Route::post('update/{id}/',[PageController::class,'update'])->name('page.update');
+        });
     });
 });

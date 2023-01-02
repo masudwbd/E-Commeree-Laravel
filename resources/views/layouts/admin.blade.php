@@ -17,10 +17,11 @@
     <link rel="stylesheet" href="{{ asset('backend') }}/dist/css/adminlte.min.css">
     <link rel="stylesheet" href="{{ asset('backend') }}/plugins/sweetalert2/sweetalert2.css">
     <link rel="stylesheet" href="{{ asset('backend') }}/plugins/toastr/toastr.css">
+
+    <link rel="stylesheet" href="{{ asset('backend') }}/plugins/summernote/summernote-bs4.min.css">
     <!-- DataTables -->
     <link rel="stylesheet" href="{{ asset('backend') }}/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-    <link rel="stylesheet"
-        href="{{ asset('backend') }}/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+    <link rel="stylesheet" href="{{ asset('backend') }}/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
     <link rel="stylesheet" href="{{ asset('backend') }}/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
 </head>
 
@@ -85,6 +86,7 @@
     <script src="{{ asset('backend/dist/js/pages/dashboard2.js') }}"></script>
     <script src="{{ asset('backend/plugins/toastr/toastr.min.js') }}"></script>
     <script src="{{ asset('backend/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
+    <script src="{{ asset('backend') }}/plugins/summernote/summernote-bs4.min.js"></script>
 
 
     {{-- Before Logout --}}
@@ -171,6 +173,7 @@
     <script src="{{ asset('backend') }}/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
     <script src="{{ asset('backend') }}/plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="{{ asset('backend') }}/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+    <script src="{{ asset('backend') }}/plugins/summernote/summernote-bs4.min.js"></script>
     <!-- AdminLTE App -->
     <script src="{{ asset('backend') }}/dist/js/adminlte.min.js"></script>
     <!-- AdminLTE for demo purposes -->
@@ -195,6 +198,18 @@
             });
         });
     </script>
+    <script>
+        $(function () {
+          // Summernote
+          $('.textarea').summernote()
+      
+          // CodeMirror
+          CodeMirror.fromTextArea(document.getElementById("codeMirrorDemo"), {
+            mode: "htmlmixed",
+            theme: "monokai"
+          });
+        })
+      </script>
 
 </body>
 
