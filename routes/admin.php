@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\CouponController;
+use App\Http\Controllers\Admin\WarehouseController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\AdminController;
@@ -58,6 +60,24 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'middleware' => 'is_a
         Route::post('update/',[BrandController::class,'update'])->name('brand.update');
     });
 
+    // warehouse routes
+    Route::group(['prefix'=>'warehouse'],function(){
+        Route::get('/',[WarehouseController::class,'index'])->name('warehouse.index');
+        Route::post('/store',[WarehouseController::class,'store'])->name('warehouse.store');
+        Route::get('/delete/{id}',[WarehouseController::class,'destroy'])->name('warehouse.delete');
+        Route::get('/edit/{id}',[WarehouseController::class,'edit']);
+        Route::post('update/',[WarehouseController::class,'update'])->name('warehouse.update');
+    });
+
+    // coupon routes
+    Route::group(['prefix'=>'coupon'],function(){
+        Route::get('/',[CouponController::class,'index'])->name('coupon.index');
+        Route::post('/store',[CouponController::class,'store'])->name('coupon.store');
+        Route::get('/delete/{id}',[CouponController::class,'destroy'])->name('coupon.delete');
+        Route::get('/edit/{id}',[CouponController::class,'edit']);
+        Route::post('update/',[CouponController::class,'update'])->name('coupon.update');
+    });
+
     // Settings routes
     Route::group(['prefix'=>'settings'],function(){
         //seo settings
@@ -69,6 +89,11 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'middleware' => 'is_a
         Route::group(['prefix'=>'smtp'],function(){
             Route::get('/',[SettingController::class,'smtp'])->name('smtp.setting');
             Route::post('/update/{id}',[SettingController::class,'smtp_update'])->name('smtp.setting.update');
+        });
+        //website settings
+        Route::group(['prefix'=>'website'],function(){
+            Route::get('/',[SettingController::class,'website'])->name('website.index');
+            Route::post('/update/{id}',[SettingController::class,'web_update'])->name('website.update');
         });
         //page settings
         Route::group(['prefix'=>'page'],function(){
