@@ -51,6 +51,7 @@
                         </p>
                     </a>
                 </li>
+                {{-- //category --}}
                 <li class="nav-item">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-copy"></i>
@@ -93,6 +94,8 @@
                         </li>
                     </ul>
                 </li>
+
+                {{-- //settings --}}
                 <li class="nav-item">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-copy"></i>
@@ -135,6 +138,8 @@
                         </li>
                     </ul>
                 </li>
+
+                {{-- //offers --}}
                 <li class="nav-item">
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-copy"></i>
@@ -151,18 +156,58 @@
                                 <p>Coupon</p>
                             </a>
                         </li>
-                       
+                        <li class="nav-item">
+                            <a href="{{route('pickup_point.index')}}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Pickup Point</p>
+                            </a>
+                        </li>
                     </ul>
                 </li>
+
+                {{-- //product --}}
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-copy"></i>
+                        <p>
+                            Product
+                            <i class="fas fa-angle-left right"></i>
+                            <span class="badge badge-info right">6</span>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{route('product.index')}}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>All Product</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('product.create')}}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>New Product</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('pickup_point.index')}}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Manage Product</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
                 <li class="nav-header">
                     Profile
                 </li>
+
                 <li class="nav-item">
                     <a href="{{ route('admin.logout') }}" class="nav-link">
                         <i class="nav-icon far fa-circle text-danger"></i>
                         <p class="text">Logout</p>
                     </a>
                 </li>
+
                 <li class="nav-item">
                     <a href="{{ route('admin.password.change') }}" class="nav-link">
                         <i class="nav-icon far fa-circle text-danger"></i>

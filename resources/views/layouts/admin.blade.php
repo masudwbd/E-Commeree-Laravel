@@ -9,6 +9,9 @@
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/css/dropify.css"  />
+        <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
+
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="{{ asset('backend') }}/plugins/fontawesome-free/css/all.min.css">
     <!-- overlayScrollbars -->
@@ -62,7 +65,7 @@
 
     <!-- REQUIRED SCRIPTS -->
     <!-- jQuery -->
-    
+    <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
     <script src="{{ asset('backend/plugins/jquery/jquery.min.js') }}"></script>
     <!-- Bootstrap -->
     <script src="{{ asset('backend') }}/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -87,6 +90,7 @@
     <script src="{{ asset('backend/plugins/toastr/toastr.min.js') }}"></script>
     <script src="{{ asset('backend/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
     <script src="{{ asset('backend') }}/plugins/summernote/summernote-bs4.min.js"></script>
+    
 
 
     {{-- Before Logout --}}
@@ -176,6 +180,7 @@
     <script src="{{ asset('backend') }}/plugins/summernote/summernote-bs4.min.js"></script>
     <!-- AdminLTE App -->
     <script src="{{ asset('backend') }}/dist/js/adminlte.min.js"></script>
+    
     <!-- AdminLTE for demo purposes -->
     {{-- <script src="{{ asset('backend') }}/dist/js/demo.js"></script> --}}
     <!-- Page specific script -->
