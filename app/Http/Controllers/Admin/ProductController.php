@@ -67,7 +67,7 @@ class ProductController extends Controller
                     }
                 })
                 ->addColumn('action', function($row) {
-                    $actionbtn = '<a href="#" class="btn btn-info edit" data-id="'.$row->id .'" data-toggle="modal" data-target="#editModal" id="edit"> <i class="fas fa-edit"></i> </a>
+                    $actionbtn = '<a href="'.route('product.edit', [$row->id]).'" class="btn btn-info" data-id="'.$row->id .'"  id="edit"> <i class="fas fa-edit"></i> </a>
                     <a href="'.route('pickup_point.delete', [$row->id]).'" class="btn btn-warning" id="delete"> <i class="fas fa-eye"></i>
                     </a>
                     <a href="'.route('product.delete', [$row->id]).'" class="btn btn-danger" id="delete"> <i class="fas fa-trash"></i>
@@ -80,6 +80,7 @@ class ProductController extends Controller
         $categories = DB::table('categories')->get();
         $brands = DB::table('brands')->get();
         $warehouses = DB::table('warehouses')->get();
+        $pickup_points = DB::table('pickup_points')->get();
         return view('admin.product.index', compact('categories','brands','warehouses'));
     }
 
@@ -93,17 +94,16 @@ class ProductController extends Controller
     }
 
     public function store(Request $request){
-        $validated = $request->validate([
-            'name' => 'required',
-            'code' => 'required|unique:products|max:55',
-            'subcategory_id' => 'required',
-            'brand_id' => 'required',
-            'unit' => 'required',
-            'selling_price' => 'required',
-            'color' => 'required',
-            'description' => 'required',
-        ]);
-
+        // $validated = $request->validate([
+        //     'name' => 'required',
+        //     'code' => 'required|unique:products|max:55',
+        //     'subcategory_id' => 'required',
+        //     'brand_id' => 'required',
+        //     'unit' => 'required',
+        //     'selling_price' => 'required',
+        //     'color' => 'required',
+        //     'description' => 'required',
+        // ]);
         $subcategory = DB::table('subcategories')->where('id', $request->subcategory_id)->first();
 
         $data = array();
@@ -129,6 +129,8 @@ class ProductController extends Controller
         $data['video'] = $request->video;
         $data['featured'] = $request->featured;
         $data['today_deal'] = $request->today_deal;
+        $data['product_slider'] = $request->product_slider;
+        $data['trendy'] = $request->trendy;
         $data['status'] = $request->status;
         $data['admin_id'] = Auth::id();
         $data['date'] = date('d-m-y');
@@ -156,6 +158,18 @@ class ProductController extends Controller
         DB::table('products')->insert($data);
         $notification = array('message' => 'Product Inserted', 'alert-type' => 'success');
         return redirect()->back()->with($notification);
+    }
+
+
+    //edit product
+    public function edit($id){
+        $product = DB::table('products')->where('id', $id)->first();
+        $categories = DB::table('categories')->get();
+        $brands = DB::table('brands')->get();
+        $warehouses = DB::table('warehouses')->get();
+        $brands = DB::table('brands')->get();
+        $pickup_points = DB::table('pickup_points')->get();
+        return view('admin.product.new product.edit', compact('product','categories', 'brands', 'warehouses', 'brands','pickup_points',));
     }
 
     //delete product

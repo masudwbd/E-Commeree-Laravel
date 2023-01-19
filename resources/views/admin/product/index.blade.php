@@ -336,12 +336,10 @@
         });
 
 
-
+        //edit product
         $('body').on('click', '.edit', function() {
             let subcat_id = $(this).data('id');
-            $.get("pickup_point/edit/" + subcat_id, function(data) {
-                $("#modal-body").html(data);
-            });
+            alert(id)
         });
 
         $('#add-form').on('submit', function() {

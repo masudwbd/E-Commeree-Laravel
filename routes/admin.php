@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\Admin\CampaignController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\TicketController;
 use App\Http\Controllers\Admin\WarehouseController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
@@ -74,11 +76,20 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'middleware' => 'is_a
     });
 
     // coupon routes
+    Route::group(['prefix'=>'campaign'],function(){
+        Route::get('/',[CampaignController::class,'index'])->name('campaign.index');
+        Route::post('/store',[CampaignController::class,'store'])->name('campaign.store');
+        Route::get('/delete/{id}',[CampaignController::class,'destroy'])->name('campaign.delete');
+        Route::get('/edit/{id}',[CampaignController::class,'edit']);
+        Route::post('update/',[CampaignController::class,'update'])->name('campaign.update');
+    });
+
+    // coupon routes
     Route::group(['prefix'=>'coupon'],function(){
         Route::get('/',[CouponController::class,'index'])->name('coupon.index');
         Route::post('/store',[CouponController::class,'store'])->name('coupon.store');
-        Route::get('/delete/{id}',[CouponController::class,'destroy'])->name('coupon.delete');
-        Route::get('/edit/{id}',[CouponController::class,'edit']);
+        Route::get('/delete/{id}/',[CouponController::class,'destroy'])->name('coupon.delete');
+        Route::get('/edit/{id}/',[CouponController::class,'edit']);
         Route::post('update/',[CouponController::class,'update'])->name('coupon.update');
     });
 
@@ -103,7 +114,7 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'middleware' => 'is_a
         Route::get('/status-deactive/{id}',[ProductController::class,'status_deactive']);
         Route::get('/status-active/{id}',[ProductController::class,'status_active']);
         Route::get('/delete/{id}',[ProductController::class,'destroy'])->name('product.delete');
-        // Route::get('/edit/{id}',[PickupPointController::class,'edit']);
+        Route::get('/edit/{id}',[ProductController::class,'edit'])->name('product.edit');
         // Route::post('update/',[PickupPointController::class,'update'])->name('pickup_point.update');
 
     });
@@ -134,5 +145,16 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'middleware' => 'is_a
             Route::get('edit/{id}/',[PageController::class,'edit'])->name('page.edit');
             Route::post('update/{id}/',[PageController::class,'update'])->name('page.update');
         });
+    });
+
+    //ticket
+    Route::group(['prefix'=>'ticket'],function(){
+        Route::get('/admin-ticket',[TicketController::class,'index'])->name('admin.ticket.index');
+        Route::get('/admin-ticket-show/{id}',[TicketController::class,'ticket_show'])->name('ticket.show');
+        Route::post('/admin-ticket-reply',[TicketController::class,'ticket_reply'])->name('ticket.reply');
+        Route::get('/admin-ticket-close/{id}',[TicketController::class,'ticket_close'])->name('admin.ticket.close');
+        Route::get('/ticket-delete/{id}/',[TicketController::class,'destroy'])->name('ticket.delete');
+        // Route::get('edit/{id}/',[PageController::class,'edit'])->name('page.edit');
+        // Route::post('update/{id}/',[PageController::class,'update'])->name('page.update');
     });
 });

@@ -25,7 +25,7 @@ class CouponController extends Controller
 
                     return $actionbtn;
                 })
-                -> rawColumns(['action'])
+                ->rawColumns(['action'])
                 ->make(true);
         }
         return view('admin.offer.coupon.index');

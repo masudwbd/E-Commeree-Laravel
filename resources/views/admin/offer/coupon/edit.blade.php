@@ -40,22 +40,40 @@
 </form>
 
 <script>
-    $('#edit_form').submit(function(e){
-    e.preventDefault();
-    var link = $(this).attr('action');
-    var request = $(this).serialize();
-    $.ajax({
-        url:link,
-        type:post,
-        async:false,
-        data:request,
-        succecss:function(data){
+// $('#edit_form').submit(function(e){
+//     e.preventDefault();
+//     var url = $(this).attr('action');
+//     var request = $(this).serialize();
+//     $.ajax({
+//         url:url,
+//         type:'post',
+//         async:false,
+//         data:request,
+//         succecss:function(data){
+//             toastr.success(data);
+//             $('#edit_form')[0].reset();
+//             $('#editModal').modal('hide'));
+//             table.ajax.reload();
+//           }
+//         });
+//       });
+
+$('#edit_form').submit(function(e){
+        e.preventDefault();
+        var url = $(this).attr('action');
+        var request =$(this).serialize();
+        $.ajax({
+          url:url,
+          type:'post',
+          async:false,
+          data:request,
+          success:function(data){  
             toastr.success(data);
             $('#edit_form')[0].reset();
-            $('#editModal').modal('hide'));
+            $('#editModal').modal('hide');
             table.ajax.reload();
-        }
-    });
-});
+          }
+        });
+      });
 
 </script>

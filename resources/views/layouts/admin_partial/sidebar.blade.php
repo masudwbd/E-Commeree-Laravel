@@ -15,8 +15,7 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="{{url($data->logo)}}" class="img-circle elevation-2"
-                    alt="User Image">
+                <img src="{{ url($data->logo) }}" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
                 <a href="#" class="d-block"> {{ Auth::user()->name }} </a>
@@ -63,31 +62,31 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{route('category.index')}}" class="nav-link">
+                            <a href="{{ route('category.index') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Category</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route('subcategory.index')}}" class="nav-link">
+                            <a href="{{ route('subcategory.index') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Sub Category</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route('childcategory.index')}}" class="nav-link">
+                            <a href="{{ route('childcategory.index') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Child Category</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route('brand.index')}}" class="nav-link">
+                            <a href="{{ route('brand.index') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Brand</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route('warehouse.index')}}" class="nav-link">
+                            <a href="{{ route('warehouse.index') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Warehouse</p>
                             </a>
@@ -107,31 +106,31 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{route('seo.setting')}}" class="nav-link">
+                            <a href="{{ route('seo.setting') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Seo Settings</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route('website.index')}}" class="nav-link">
+                            <a href="{{ route('website.index') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Website Settings</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route('page.index')}}" class="nav-link">
+                            <a href="{{ route('page.index') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Page Management</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route('smtp.setting')}}" class="nav-link">
+                            <a href="{{ route('smtp.setting') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>SMTP Settings</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route('brand.index')}}" class="nav-link">
+                            <a href="{{ route('brand.index') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Payment Gateway</p>
                             </a>
@@ -151,13 +150,19 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{route('coupon.index')}}" class="nav-link">
+                            <a href="{{ route('campaign.index') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Campaign</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('coupon.index') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Coupon</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route('pickup_point.index')}}" class="nav-link">
+                            <a href="{{ route('pickup_point.index') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Pickup Point</p>
                             </a>
@@ -177,23 +182,44 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{route('product.index')}}" class="nav-link">
+                            <a href="{{ route('product.index') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>All Product</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route('product.create')}}" class="nav-link">
+                            <a href="{{ route('product.create') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>New Product</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{route('pickup_point.index')}}" class="nav-link">
+                            <a href="{{ route('pickup_point.index') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Manage Product</p>
                             </a>
                         </li>
+                    </ul>
+                </li>
+
+                {{-- //ticket --}}
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-copy"></i>
+                        <p>
+                            Ticket
+                            <i class="fas fa-angle-left right"></i>
+                            <span class="badge badge-info right">6</span>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('admin.ticket.index') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Tickets</p>
+                            </a>
+                        </li>
+
                     </ul>
                 </li>
 

@@ -9,7 +9,7 @@ use DataTables;
 class WarehouseController extends Controller
 {
     public function __construct()
-    {
+    {value="{{old('video')}}"
         $this->middleware('auth');
     }
     public function index(Request $request)

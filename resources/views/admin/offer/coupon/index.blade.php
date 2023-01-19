@@ -44,9 +44,8 @@
 
                                     </tbody>
                                 </table>
-                                <form id="deleted_form" action="" method="post">
-                                    @method('DELETE')
-                                    @csrf
+                                <form id="deleted_form" action="" method="delete">
+                                    @csrf @method('DELETE')
                                 </form>
                             </div>
                             <!-- /.card-body -->
@@ -172,6 +171,25 @@
             });
         });
 
+        //storing coupon
+        $('#add_form').submit(function(e) {
+            e.preventDefault();
+            var url = $(this).attr('action');
+            var request = $(this).serialize();
+            $.ajax({
+                url: url,
+                type: 'post',
+                async: false,
+                data: request,
+                success: function(data) {
+                    toastr.success(data)
+                    $('#add_form')[0].reset();
+                    $('#addModal').modal('hide');
+                    table.ajax.reload();
+                }
+            });
+        });
+
 
 
         $('body').on('click', '.edit', function() {
@@ -185,71 +203,49 @@
             $('.loader').removeClass('d-none');
             $('.submit_btn').addClass('d-none');
         });
-    </script>
 
 
-//insert Coupon
-$('#add_form').submit(function(e){
-    e.preventDefault();
-    var link = $(this).attr('action');
-    var request = $(this).serialize();
-    $.ajax({
-        url:link,
-        type:post,
-        async:false,
-        data:request,
-        succecss:function(data){
-            toastr.success(data);
-            $('#add_form')[0].reset();
-            $('#addModal').modal('hide'));
-            table.ajax.reload();
-        }
-    });
-});
+        $(document).ready(function() {
+            $(document).on('click', '#delete_coupon', function(e) {
+                e.preventDefault();
+                var url = $(this).attr('href');
+                $('#deleted_form').attr('action', url);
+                Swal.fire({
+                        title: 'Are you want to delete?',
+                        text: "",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes'
+                    })
+                    .then((willDelete) => {
+                        if (willDelete) {
+                            $('#deleted_form').submit();
+                        } else {
+                            Swal('Your Data Is Safe!');
+                        }
+                    });
+            });
 
-
-
-//delete coupon
-    <script>
-    $(document).ready(function(){
-        $(document).on("click", "#deleted_form", function(e) {
-            e.preventDefault();
-            var link = $(this).attr("href");
-            $('#deleted_form').attr('action', link );
-            Swal.fire({
-                    title: 'Are you want to delete?',
-                    text: "",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes'
-                })
-                .then((willDelete) => {
-                    if (willDelete) {
-                        $("#deleted_form").submit();
-                    } else {
-                        swal("Your File Is Safe!")
+            // Data passed here
+            $('#deleted_form').submit(function(e) {
+                e.preventDefault();
+                var url = $(this).attr('action');
+                var request = $(this).serialize();
+                $.ajax({
+                    url: url,
+                    type: 'get',
+                    async: false,
+                    data: request,
+                    success: function(data) {
+                        toastr.success(data)
+                        $('#deleted_form')[0].reset();
+                        table.ajax.reload();
                     }
                 });
-        });
-
-        //data passed through here
-        $('#deleted_form').submit(function(e){
-            e.preventDefault();
-            var link = $(this).attr('action');
-            var request = $(this).serialize();
-            $.ajax({
-                url:link,
-                type:post,
-                async:false,
-                data:request,
-                succecss:function(data){
-                    $('#deleted_form')[0].reset();
-                    table.ajax.reload();
-                }
             });
         });
-    })
+
     </script>
 @endsection
