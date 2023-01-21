@@ -129,7 +129,7 @@
                                                     <select class="custom-select form-control-sm" name="size"
                                                         style="min-width: 120px;">
                                                         @foreach ($sizes as $size)
-                                                            <option value="{{ $size_value }}">{{ $size_value }}</option>
+                                                            <option value="{{ $size }}">{{ $size }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>

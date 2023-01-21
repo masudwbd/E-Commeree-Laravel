@@ -22,6 +22,7 @@ Route::get('/login',function(){
     return redirect()->to('/');
 })->name('login');
 
+
 Route::get('/customer/logout', [HomeController::class, 'logout'])->name('logout');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -76,6 +77,10 @@ Route::group(['namespace' => 'App\Http\Controllers\Frontend'], function () {
     Route::get('/user-ticket-show/{id}', [ProfileController::class, 'ticket_show'])->name('user.ticket.show');
     Route::get('/user-ticket-delete/{id}', [ProfileController::class, 'ticket_delete'])->name('user.ticket.delete');
     Route::get('/order-details/{id}', [ProfileController::class, 'order_details'])->name('order.details.show');
+
+    //payment
+    Route::post('/success', [CheckoutController::class, 'success'])->name('success');
+    Route::post('/fail', [CheckoutController::class, 'fail'])->name('fail');
 });
 
 ?>

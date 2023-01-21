@@ -80,7 +80,7 @@ class SettingController extends Controller
             };
             $photo=$request->logo;
             $photoname = uniqid().'.'.$photo->getClientOriginalExtension();
-            Image::make($photo)->resize(32, 32)->save('backend/files/settings/'.$photoname);
+            Image::make($photo)->resize(200, 150)->save('backend/files/settings/'.$photoname);
             $data['logo'] = 'backend/files/settings/'.$photoname;
         }else{
             $data['logo'] = $request->old_logo;
@@ -99,6 +99,44 @@ class SettingController extends Controller
 
         DB::table('settings')->where('id', $id)->update($data);
         $notification = array('message' => 'web settings updated', 'alert-type' => 'success');
+        return redirect()->back()->with($notification);
+    }
+
+    public function payment_gateway(){
+        $aamarpay = DB::table('payment_gateway_bd')->first();
+        $surjopay = DB::table('payment_gateway_bd')->skip(1)->first();
+        $ssl = DB::table('payment_gateway_bd')->skip(2)->first();
+
+        return view('admin.bd_payment_gateway.edit', compact('aamarpay','surjopay','ssl'));
+    }
+    public function aamarpay_payment_gateway(Request $request){
+        $data = array(
+            'store_id' => $request->store_id,
+            'signature_id' => $request->signature_id,
+            'status' => $request->status,
+        );
+        DB::table('payment_gateway_bd')->where('id', $request->id)->update($data);
+        $notification = array('message' => 'payment gateway updated', 'alert-type' => 'success');
+        return redirect()->back()->with($notification);
+    }
+    public function surjopay_payment_gateway(Request $request){
+        $data = array(
+            'store_id' => $request->store_id,
+            'signature_id' => $request->signature_id,
+            'status' => $request->status,
+        );
+        DB::table('payment_gateway_bd')->where('id', $request->id)->update($data);
+        $notification = array('message' => 'payment gateway updated', 'alert-type' => 'success');
+        return redirect()->back()->with($notification);
+    }
+    public function ssl_payment_gateway(Request $request){
+        $data = array(
+            'store_id' => $request->store_id,
+            'signature_id' => $request->signature_id,
+            'status' => $request->status,
+        );
+        DB::table('payment_gateway_bd')->where('id', $request->id)->update($data);
+        $notification = array('message' => 'payment gateway updated', 'alert-type' => 'success');
         return redirect()->back()->with($notification);
     }
 }

@@ -92,23 +92,7 @@
 										</ul>
 									</li>
 									<li>
-										<a href="#">Register<i class="fas fa-chevron-down"></i></a>
-										<ul style="width:300px; padding:10px">
-											<form action="{{route('login')}}">
-												@csrf
-												<div class="form-group">
-													<label for="email address">Email Address</label>
-													<input type="email" name="email" class="form-control">
-												</div>
-												<div class="form-group">
-													<label for="password">Password</label>
-													<input type="password" name="password" class="form-control">
-												</div>
-												<div class="form-group">
-													<input type="submit" name="submit" class="form-control">
-												</div>
-											</form>
-										</ul>
+									<a href="/register">Register</a>
 									</li>
 									@endif
 
@@ -135,11 +119,13 @@
 		<div class="header_main">
 			<div class="container">
 				<div class="row">
-
+					@php 
+						$settings = DB::table('settings')->first();
+					@endphp
 					<!-- Logo -->
 					<div class="col-lg-2 col-sm-3 col-3 order-1">
 						<div class="logo_container">
-							<div class="logo"><a href="{{route('frontend.index')}}">OneTech</a></div>
+							<div class="logo"><a href="{{route('frontend.index')}}"><img src="{{asset($settings->logo)}}" style="height: 150px" alt=""></a></div>
 						</div>
 					</div>
 
@@ -235,11 +221,11 @@
 						</div>
 						<div class="footer_social">
 							<ul>
-								<li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-								<li><a href="#"><i class="fab fa-twitter"></i></a></li>
-								<li><a href="#"><i class="fab fa-youtube"></i></a></li>
-								<li><a href="#"><i class="fab fa-google"></i></a></li>
-								<li><a href="#"><i class="fab fa-vimeo-v"></i></a></li>
+								<li><a href="{{$settings->facebook}}" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
+								<li><a href="{{$settings->twitter}}" target="_blank"><i class="fab fa-twitter"></i></a></li>
+								<li><a href="{{$settings->youtube}}" target="_blank"><i class="fab fa-youtube"></i></a></li>
+								<li><a href="{{$settings->main_email}}" target="_blank"><i class="fab fa-google"></i></a></li>
+								<li><a href="{{$settings->linkdin}}" target="_blank"><i class="fab fa-linkdin"></i></a></li>
 							</ul>
 						</div>
 					</div>

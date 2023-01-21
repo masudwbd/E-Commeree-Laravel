@@ -130,7 +130,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('brand.index') }}" class="nav-link">
+                            <a href="{{ route('payment.gateway') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Payment Gateway</p>
                             </a>
@@ -170,6 +170,7 @@
                     </ul>
                 </li>
 
+
                 {{-- //product --}}
                 <li class="nav-item">
                     <a href="#" class="nav-link">
@@ -197,6 +198,39 @@
                             <a href="{{ route('pickup_point.index') }}" class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Manage Product</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                
+                {{-- //offers --}}
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-copy"></i>
+                        <p>
+                            Orders
+                            <i class="fas fa-angle-left right"></i>
+                            <span class="badge badge-info right">6</span>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('orders.index') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Order List</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('coupon.index') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Coupon</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('pickup_point.index') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Pickup Point</p>
                             </a>
                         </li>
                     </ul>

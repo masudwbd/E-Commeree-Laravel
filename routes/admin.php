@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\PickupPointController;
+use App\Http\Controllers\Admin\OrderController;
 
 use App\Http\Controllers\SettingsController;
 use Illuminate\Support\Facades\Route;
@@ -102,6 +103,13 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'middleware' => 'is_a
         Route::post('update/',[PickupPointController::class,'update'])->name('pickup_point.update');
     });
 
+    // orders.list routes
+    Route::group(['prefix'=>'orders'],function(){
+        Route::get('/',[OrderController::class, 'index'])->name('orders.index');
+        Route::get('/admin/edit/{id}',[OrderController::class,'edit']);
+        Route::post('update/',[OrderController::class,'update'])->name('order.status.update');
+    });
+
     // product routes
     Route::group(['prefix'=>'product'],function(){
         Route::get('/',[ProductController::class,'index'])->name('product.index');
@@ -130,6 +138,13 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'middleware' => 'is_a
         Route::group(['prefix'=>'smtp'],function(){
             Route::get('/',[SettingController::class,'smtp'])->name('smtp.setting');
             Route::post('/update/{id}',[SettingController::class,'smtp_update'])->name('smtp.setting.update');
+        });
+        //payment gateway
+        Route::group(['prefix'=>'payment'],function(){
+            Route::get('/',[SettingController::class,'payment_gateway'])->name('payment.gateway');
+            Route::post('/aamarpay',[SettingController::class,'aamarpay_payment_gateway'])->name('aamarpay.payment.gateway');
+            Route::post('/surjopay',[SettingController::class,'surjopay_payment_gateway'])->name('surjopay.payment.gateway');
+            Route::post('/ssl',[SettingController::class,'ssl_payment_gateway'])->name('ssl.payment.gateway');
         });
         //website settings
         Route::group(['prefix'=>'website'],function(){

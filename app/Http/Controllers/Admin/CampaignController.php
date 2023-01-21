@@ -54,7 +54,7 @@ class CampaignController extends Controller
         //working with image
         $photo=$request->image;
         $photoname = $slug.'.'.$photo->getClientOriginalExtension();
-        Image::make($photo)->resize(468, 90)->save('backend/files/campaigns/'.$photoname);
+        Image::make($photo)->resize(1080,1920)->save('backend/files/campaigns/'.$photoname);
 
         $data['image'] = 'backend/files/campaigns/'.$photoname;
 
