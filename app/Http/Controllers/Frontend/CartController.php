@@ -62,8 +62,7 @@ class CartController extends Controller
 
     public function wishlist_show(){
         if(Auth::check()){
-            $wishlist = DB::table('wishlist')->leftjoin('products', 'wishlist.product_id', 'products.id')->select('products.name', 'products.thumbnail', 'wishlist.*')->where('wishlist.user_id', Auth::id())->get();
-
+            $wishlist = DB::table('wishlist')->leftjoin('products', 'wishlist.product_id', 'products.id')->select('products.name','products.slug', 'products.thumbnail', 'wishlist.*')->where('wishlist.user_id', Auth::id())->get();
             return view('frontend.cart.wishlist', compact('wishlist'));
             
         }

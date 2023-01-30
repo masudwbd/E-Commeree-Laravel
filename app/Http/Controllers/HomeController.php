@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Auth;
 use Illuminate\Http\Request;
-
+use DB; 
 class HomeController extends Controller
 {
     /**
@@ -24,7 +24,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        return redirect()->to('/');
     }
 
     public function logout(){
@@ -32,5 +32,10 @@ class HomeController extends Controller
         return redirect()->back();
     }
 
+    public function blog(){
+        $page = DB::table('pages')->where('page_position', '1')->first();
+        $blogs = DB::table('blogs')->where('status', 1)->get();
+        return view('frontend.blog', compact('page','blogs'));
+    }
     
 }

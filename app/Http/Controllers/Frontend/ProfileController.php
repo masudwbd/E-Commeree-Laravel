@@ -8,6 +8,8 @@ use Auth;
 use Hash;
 use DB;
 use Image;
+use Str;
+use File;
 use App\Models\User;
 class ProfileController extends Controller
 {
@@ -28,6 +30,10 @@ class ProfileController extends Controller
     public function user_open_ticket(){
         $tickets = DB::table('tickets')->where('user_id', Auth::id())->take(10)->get();
         return view('frontend.user.open_ticket', compact('tickets'));
+    }
+    public function order_list(){
+        $orders = DB::table('orders')->where('user_id', Auth::id())->orderBy('id', 'DESC')->take(10)->get();
+        return view('frontend.user.orderlist', compact('orders'));
     }
     public function user_create_ticket(){
         return view('frontend.user.create_ticket');
@@ -81,8 +87,8 @@ class ProfileController extends Controller
             $user->password = Hash::make($new_pass);
             $user->save();
             Auth::logout();
-            $notification = array('message' => 'You have successfully updated your password!', 'alert-type' => 'success');
 
+            $notification = array('message' => 'You have successfully updated your password!', 'alert-type' => 'success');
             return redirect()->route('admin.login')->with($notification);
         }else{
             $notification = array('message' => 'Old Password is incorrect!', 'alert-type' => 'error');
@@ -95,5 +101,46 @@ class ProfileController extends Controller
         $order = DB::table('orders')->where('id', $id)->first();
         $ordered_items = DB::table('order_details')->where('order_id', $id)->get();
         return view('frontend.user.order.orders_details', compact('ordered_items','order'));
+    }
+
+    public function image_add(Request $request){
+        $user = User::findorfail(Auth::id());
+        $slug = Str::slug($user->name,'-');
+        $photo = $request->profile_picture;
+        $photoname = $slug . '.' . $photo->getClientOriginalExtension();
+        Image::make($photo)->resize(300,300)->save('backend/files/profile_pictures/'.$photoname);
+        $image = 'backend/files/profile_pictures/' . $photoname;
+        $user->image = $image;
+        $user->save();
+
+        $notification = array('message' => 'Profile Picture Uploaded', 'alert-type' => 'success');
+        return redirect()->back()->with($notification);
+    }
+
+    public function image_update(Request $request)
+    {
+        $user = User::findorfail(Auth::id());
+        $slug = Str::slug($user->name, '-');
+        if ($request->profile_picture) {
+            if(File::exists($request->old_profile_picture)){
+                unlink($request->old_profile_picture);
+            }
+            $photo = $request->profile_picture;
+            $photoname = $slug . '.' . $photo->getClientOriginalExtension();
+            Image::make($photo)->resize(300, 300)->save('backend/files/profile_pictures/' . $photoname);
+            $image = 'backend/files/profile_pictures/' . $photoname;
+            $user->image = $image;
+            $user->save();
+
+            $notification = array('message' => 'Profile Picture Updated', 'alert-type' => 'success');
+            return redirect()->back()->with($notification);
+        } else {
+            $user->image = $request->old_profile_picture;
+            $user->save();
+
+            $notification = array('message' => 'Profile Picture Updated', 'alert-type' => 'success');
+            return redirect()->back()->with($notification);
+        }
+
     }
 }

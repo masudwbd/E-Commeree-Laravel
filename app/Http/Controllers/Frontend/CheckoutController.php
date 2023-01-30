@@ -195,9 +195,9 @@ class CheckoutController extends Controller
         $order['c_address']=$request->opt_d;
         $order['c_email']=$request->cus_email;
         $order['c_city']=$request->opt_b;
-        if(Sessio()->has('coupon')){
+        if(Session()->has('coupon')){
             $order['subtotal']=Cart::subtotal();
-            $order['coupon_code']=Sessio()->get('coupon')['name'];
+            $order['coupon_code']=Session()->get('coupon')['name'];
             $order['coupon_discount']=Session()->get('coupon')['after_discount'];
         }else{
             $order['subtotal']=Cart::subtotal();

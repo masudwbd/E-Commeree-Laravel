@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use DB;
 use Str;
 use Auth;
+use File;
 use Image;
 use DataTables;
 use App\Models\Product;
@@ -155,9 +156,7 @@ class ProductController extends Controller
             }
             $data['images'] = json_encode($images);
         }
-        DB::table('products')->insert($data);
-        $notification = array('message' => 'Product Inserted', 'alert-type' => 'success');
-        return redirect()->back()->with($notification);
+
     }
 
 
@@ -165,12 +164,88 @@ class ProductController extends Controller
     public function edit($id){
         $product = DB::table('products')->where('id', $id)->first();
         $categories = DB::table('categories')->get();
+        $childcategories = DB::table('childcategories')->where('category_id', $product->category_id)->get();
         $brands = DB::table('brands')->get();
         $warehouses = DB::table('warehouses')->get();
         $brands = DB::table('brands')->get();
         $pickup_points = DB::table('pickup_points')->get();
-        return view('admin.product.new product.edit', compact('product','categories', 'brands', 'warehouses', 'brands','pickup_points',));
+        return view('admin.product.new product.edit', compact('product','categories', 'brands', 'warehouses', 'brands','pickup_points','childcategories'));
     }
+
+    public function  update(Request $request){
+        $subcategory = DB::table('subcategories')->where('id', $request->subcategory_id)->first();
+        $data['category_id'] = $subcategory->category_id;
+        $data['subcategory_id'] = $request->subcategory_id;
+        $data['childcategory_id'] = $request->childcategory_id;
+        $data['brand_id'] = $request->brand_id;
+        $data['name'] = $request->name;
+        $data['slug'] = Str::slug($request->name, '-');
+        $data['code'] = $request->code;
+        $data['pickup_point_id'] = $request->pickup_point_id;
+        $data['purchase_price'] = $request->purchase_price;
+        $data['selling_price'] = $request->selling_price;
+        $data['discount_price'] = $request->discount_price;
+        $data['unit'] = $request->unit;
+        $data['tags'] = $request->tags;
+        $data['warehouse'] = $request->warehouse;
+        $data['stock_quantity'] = $request->stock;
+        $data['color'] = $request->color;
+        $data['size'] = $request->size;
+        $data['description'] = $request->description;
+        $data['video'] = $request->video;
+        $data['featured'] = $request->featured;
+        $data['today_deal'] = $request->today_deal;
+        $data['product_slider'] = $request->product_slider;
+        $data['trendy'] = $request->trendy;
+        $data['status'] = $request->status;
+        $data['admin_id'] = Auth::id();
+        $data['date'] = date('d-m-y');
+        $data['month'] = date('f');
+
+        if($request->main_thumbnail){
+            if(File::exists($request->old_thumbnail)){
+                unlink($request->old_thumbnail);
+            }
+            $slug = Str::slug($request->name, '-');
+            $photo = $request->main_thumbnail;
+            $photoname = $slug . '.' . $photo->getClientOriginalExtension();
+            Image::make($photo)->resize(600,600)->save('backend/files/products/product_thumbnails/'.$photoname);
+
+            $data['thumbnail'] = 'backend/files/products/product_thumbnails/'.$photoname;
+        }else{
+            $data['thumbnail'] = $request->old_thumbnail;
+        }
+       //__multiple image update__//
+
+       $old_images = $request->has('old_images');
+       if($old_images){
+           $images = $request->old_images;
+           $data['images'] = json_encode($images);
+           DB::table('products')->where('id', $request->id)->update($data);
+           $notification=array('messege' => 'Product Updated!', 'alert-type' => 'success');
+           return redirect()->back()->with($notification);
+       }else{
+           $images = array();
+           $data['images'] = json_encode($images); 
+       }
+
+       if($request->hasFile('images')){
+           foreach ($request->file('images') as $key => $image) {
+               $imageName= hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
+               Image::make($image)->resize(600,600)->save('backend/files/products/'.$imageName);
+               array_push($images, $imageName);
+           }
+           $data['images'] = json_encode($images);
+           DB::table('products')->where('id', $request->id)->update($data);
+           $notification=array('messege' => 'Product Updated!', 'alert-type' => 'success');
+           return redirect()->back()->with($notification);
+    
+       }
+
+
+
+    }
+
 
     //delete product
     public function destroy($id){

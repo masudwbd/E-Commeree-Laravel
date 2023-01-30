@@ -50,7 +50,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="">Page description</label>
-                                        <textarea  class="form-control textarea" rows="8" type="text" name="page_description" placeholder="Enter page name"></textarea>
+                                        <textarea class="form-control textarea" rows="4" name="page_description"></textarea>
                                         <small>This data will be showed in your web page!</small>
                                     </div>
                                 </div>

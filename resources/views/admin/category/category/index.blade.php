@@ -78,13 +78,14 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="{{ route('category.store') }}" method="POST">
+                <form action="{{ route('category.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="category_name">Category Name</label>
                             <input type="text" class="form-control" id="category_name" name="category_name"
                                 placeholder="Enter Category Name">
+                            <input type="file" name="icon" id="">
                             <small id="" class="form-text text-muted">This is your main category</small>
                         </div>
                     </div>
@@ -108,22 +109,9 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="{{route('category.update')}}" method="POST">
-                    @csrf
                     <div class="modal-body">
-                        <div class="form-group">
-                            <label for="category_name">Category Name</label>
-                            <input type="text" class="form-control" id="e_category_name" name="category_name"
-                                placeholder="Enter Category Name">
-                            <small id="" class="form-text text-muted">This is your main category</small>
-                            <input type="hidden" id="e_category_id" name="id">
-                        </div>
+                       
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
-                </form>
             </div>
         </div>
     </div>
@@ -131,11 +119,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 
     <script>
-        $('body').on('click','#edit', function(){
-            let cat_id=$(this).data('id');
-            $.get('category/edit/'+cat_id, function(data){
-                $('#e_category_name').val(data.category_name);
-                $('#e_category_id').val(data.id);
+        $('body').on('click', '.edit', function() {
+            let cat_id = $(this).data('id');
+            $.get("category/edit/" + cat_id, function(data) {
+                $(".modal-body").html(data);
             });
         });
     </script>

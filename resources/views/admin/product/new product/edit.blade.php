@@ -37,7 +37,7 @@
         <!-- /.content-header -->
         <section class="content  bg-light">
             <div class="container-fluid">
-                <form action="{{route('product.store')}}" enctype="multipart/form-data" method="POST">
+                <form action="{{route('product.update')}}" enctype="multipart/form-data" method="POST">
                     @csrf
                     <div class="row">
                         <div class="col-8">
@@ -51,6 +51,7 @@
                                                 <label for="product_name">Product Name</label>
                                                 <input type="text" class="form-control" value="{{$product->name}}" name="name"
                                                     id="product_name">
+                                                <input type="hidden" name="id" value="{{$product->id}}">
                                             </div>
                                             <div class="form-group col-lg-6">
                                                 <label for="product_code">Product Code</label><span class="text-danger">
@@ -72,7 +73,7 @@
                                                         @endphp
                                                         <option value="" disabled >{{ $row->category_name }}</option>
                                                         @foreach ($subcategories as $row)
-                                                            <option value="{{ $row->id }}">
+                                                            <option @if($product->subcategory_id==$row->id) selected="" @endif value="{{ $row->id }}">
                                                                 ---{{ $row->subcategory_name }}</option>
                                                         @endforeach
                                                     @endforeach
@@ -81,9 +82,13 @@
                                             <div class="form-group col-lg-6">
                                                 <label for="product_code">Child Category</label><span class="text-danger">
                                                     *</span>
-                                                <select class="form-control" name="childcategory_id" value="{{old('childcategory_id')}}" id="childcategory_id">
-
+                                                <select class="form-control" name="childcategory_id"  id="childcategory_id">
+                                                    @foreach ($childcategories as $row)
+                                                    <option @if($product->childcategory_id==$row->id) selected="" @endif value="{{ $row->id }}">
+                                                    {{ $row->childcategory_name }}</option>
+                                                        @endforeach
                                                 </select>
+
                                             </div>
                                         </div>
                                         <div class="row">
@@ -91,7 +96,7 @@
                                                 <label for="brands">Brands</label><span class="text-danger"> *</span>
                                                 <select class="form-control" name="brand_id" value="{{old('brand_id')}}" id="">
                                                     @foreach ($brands as $row)
-                                                        <option value="{{ $row->id }}">{{ $row->brand_name }}</option>
+                                                        <option  @if($product->brand_id==$row->id) selected="" @endif  value="{{ $row->id }}">{{ $row->brand_name }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -99,7 +104,7 @@
                                                 <label for="exampleInputPassword1">Pickup Point</label>
                                                 <select class="form-control" name="pickup_point_id">
                                                   @foreach($pickup_points as $row)
-                                                    <option value="{{ $row->id }}">{{ $row->pickup_point_name  }}</option>
+                                                    <option  @if($product->pickup_point_id==$row->id) selected="" @endif  value="{{ $row->id }}">{{ $row->pickup_point_name  }}</option>
                                                   @endforeach
                                                 </select>
                                             </div>
@@ -186,8 +191,10 @@
                         <div class="col-4">
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="main_thumbnail">Main Thumbnail</label>
-                                    <input type="file" class="form-control dropify" value="{{old('main_thumbnail')}}" name="main_thumbnail">
+                                    <img src="{{asset($product->thumbnail)}}" style="height: 50px; width:50px;">
+                                    <label for="exampleInputEmail1">Main Thumbnail <span class="text-danger">*</span> </label><br>
+                                    <input type="file" name="main_thumbnail"  accept="image/*" class="dropify">
+                                    <input type="hidden" name="old_thumbnail" value="{{ $product->thumbnail }}" >
                                 </div>
                                 <div class="">
                                     <table class="table table-bordered" id="dynamic_field">
@@ -195,10 +202,23 @@
                                             <h3 class="card-title">More Images (Click Add For More Image)</h3>
                                         </div>
                                         <tr>
-                                            <td><input type="file" accept="image/*" name="images[]"
-                                                    class="form-control name_list" /></td>
-                                            <td><button type="button" name="add" id="add"
-                                                    class="btn btn-success">Add</button></td>
+                                            @php
+                                            $images = json_decode($product->images,true);
+                                         @endphp
+                                         @if(!$images)
+                                         @else
+                                         <div class="row" >
+                                          @foreach($images as $key => $image)
+                                            <div class="col-md-4" >
+                                               <img alt="" src="{{asset('backend/files/products/' .$image)}}" style="width: 100px; height: 80px; padding: 10px;"/>
+                                               <input type="hidden" name="old_images[]" value="{{ $image }}">
+                                               <button type="button" class="remove-files" style="border: none;">X</button>
+                                            </div>
+                                          @endforeach
+                                          </div>
+                                         @endif
+                                            <td><input type="file" accept="image/*" name="images[]" class="form-control name_list" /></td>
+                                            <td><button type="button" name="add" id="add" class="btn btn-success">Add</button></td>
                                         </tr>
                                     </table>
                                 </div>
@@ -287,6 +307,16 @@
         });
      });
 
+
+      
+    //edit product imahe remove by cros btn
+    $('.remove-files').on('click', function(){
+         $(this).parents(".col-md-4").remove();
+     });
+
+
     </script>
     
+
+
 @endsection

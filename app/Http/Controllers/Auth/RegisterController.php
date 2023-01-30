@@ -70,4 +70,11 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
     }
+    protected function redirectTo()
+    {
+        if (auth()->user()->role_id == 0) {
+            return '/';
+        }
+        return '/';
+    }
 }

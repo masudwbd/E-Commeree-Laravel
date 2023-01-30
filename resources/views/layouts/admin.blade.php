@@ -88,9 +88,12 @@
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
     <script src="{{ asset('backend/dist/js/pages/dashboard2.js') }}"></script>
     <script src="{{ asset('backend/plugins/toastr/toastr.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <script src="http://bootstrap-tagsinput.github.io/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
+    <script src="//cdn.ckeditor.com/4.16.0/full/ckeditor.js"></script>
     <script src="{{ asset('backend/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
     <script src="{{ asset('backend') }}/plugins/summernote/summernote-bs4.min.js"></script>
-    
+
 
 
     {{-- Before Logout --}}
@@ -180,6 +183,7 @@
     <script src="{{ asset('backend') }}/plugins/summernote/summernote-bs4.min.js"></script>
     <!-- AdminLTE App -->
     <script src="{{ asset('backend') }}/dist/js/adminlte.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/printThis/1.15.0/printThis.js" ></script>
     
     <!-- AdminLTE for demo purposes -->
     {{-- <script src="{{ asset('backend') }}/dist/js/demo.js"></script> --}}

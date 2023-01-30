@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\CampaignController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\TicketController;
+use App\Http\Controllers\Admin\UserRoleController;
 use App\Http\Controllers\Admin\WarehouseController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\HomeController;
@@ -16,6 +18,7 @@ use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\PickupPointController;
 use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\BlogCategoryController;
 
 use App\Http\Controllers\SettingsController;
 use Illuminate\Support\Facades\Route;
@@ -76,13 +79,22 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'middleware' => 'is_a
         Route::post('update/',[WarehouseController::class,'update'])->name('warehouse.update');
     });
 
-    // coupon routes
+    // campaign routes
     Route::group(['prefix'=>'campaign'],function(){
         Route::get('/',[CampaignController::class,'index'])->name('campaign.index');
         Route::post('/store',[CampaignController::class,'store'])->name('campaign.store');
         Route::get('/delete/{id}',[CampaignController::class,'destroy'])->name('campaign.delete');
         Route::get('/edit/{id}',[CampaignController::class,'edit']);
         Route::post('update/',[CampaignController::class,'update'])->name('campaign.update');
+    });
+    // campaign products  routes
+    Route::group(['prefix'=>'campaign'],function(){
+        Route::get('/products/{id}',[CampaignController::class,'campaign_products_index'])->name('campaign.products.all');
+        Route::get('/products/campaigned/{campaign_id}',[CampaignController::class,'campaigned_products_index'])->name('campaigned.products.all');
+        Route::get('/add/{id}/{campaign_id}',[CampaignController::class,'campaign_products_add'])->name('campaign.products.add');
+        Route::get('/destroy/{id}',[CampaignController::class,'campaign_products_delete'])->name('campaigned.product.delete');
+        // Route::get('/edit/{id}',[CampaignController::class,'edit']);
+        // Route::post('update/',[CampaignController::class,'update'])->name('campaign.update');
     });
 
     // coupon routes
@@ -123,12 +135,19 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'middleware' => 'is_a
         Route::get('/status-active/{id}',[ProductController::class,'status_active']);
         Route::get('/delete/{id}',[ProductController::class,'destroy'])->name('product.delete');
         Route::get('/edit/{id}',[ProductController::class,'edit'])->name('product.edit');
+        Route::post('/update',[ProductController::class,'update'])->name('product.update');
         // Route::post('update/',[PickupPointController::class,'update'])->name('pickup_point.update');
 
     });
 
     // Settings routes
     Route::group(['prefix'=>'settings'],function(){
+        //user roles
+        Route::group(['prefix'=>'roles'],function(){
+            Route::get('/',[UserRoleController::class,'index'])->name('user.roles.index');
+            Route::get('/edit/{id}',[UserRoleController::class,'edit']);
+            Route::post('/update',[UserRoleController::class,'update'])->name('user.roles.update');
+        });
         //seo settings
         Route::group(['prefix'=>'seo'],function(){
             Route::get('/',[SettingController::class,'seo'])->name('seo.setting');
@@ -171,5 +190,34 @@ Route::group(['namespace' => 'App\Http\Controllers\Admin', 'middleware' => 'is_a
         Route::get('/ticket-delete/{id}/',[TicketController::class,'destroy'])->name('ticket.delete');
         // Route::get('edit/{id}/',[PageController::class,'edit'])->name('page.edit');
         // Route::post('update/{id}/',[PageController::class,'update'])->name('page.update');
+    });
+
+    //blog category
+    Route::group(['prefix'=>'blog-category'],function(){
+        Route::get('/', [BlogCategoryController::class, 'category_index'])->name('blog.categories');
+        Route::post('/store', [BlogCategoryController::class, 'category_store'])->name('blog.category.store');
+        Route::get('/edit/{id}', [BlogCategoryController::class, 'category_edit']);
+        Route::post('/update', [BlogCategoryController::class, 'category_update'])->name('blog.category.update');
+    });
+
+    //blog
+    Route::group(['prefix'=>'blog'],function(){
+        Route::get('/', [BlogController::class, 'blog_index'])->name('blog.index');
+        Route::post('/store', [BlogController::class, 'blog_store'])->name('blog.store');
+        Route::get('/delete/{id}', [BlogController::class, 'blog_delete'])->name('blog.delete');
+        Route::get('/edit/{id}', [BlogController::class, 'blog_edit']);
+        Route::post('/update', [BlogController::class, 'blog_update'])->name('blog.update');
+        // Route::post('/update', [BlogController::class, 'category_update'])->name('blog.category.update');
+    });
+
+    //reports
+    Route::group(['prefix'=>'reports'],function(){
+        Route::get('/orders', [OrderController::class, 'order_reports'])->name('order.reports.index');
+        Route::get('/orders/print', [OrderController::class, 'order_print'])->name('report.order.print');
+        // Route::post('/store', [BlogController::class, 'blog_store'])->name('blog.store');
+        // Route::get('/delete/{id}', [BlogController::class, 'blog_delete'])->name('blog.delete');
+        // Route::get('/edit/{id}', [BlogController::class, 'blog_edit']);
+        // Route::post('/update', [BlogController::class, 'blog_update'])->name('blog.update');
+        // Route::post('/update', [BlogController::class, 'category_update'])->name('blog.category.update');
     });
 });

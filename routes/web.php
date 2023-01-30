@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Frontend\CheckoutController;
 use App\Http\Controllers\Frontend\IndexController;
 use App\Http\Controllers\Auth\LoginController;
@@ -27,11 +28,20 @@ Route::get('/customer/logout', [HomeController::class, 'logout'])->name('logout'
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+//blog
+Route::get('/blogs', [App\Http\Controllers\HomeController::class, 'blog'])->name('frontend.blog');
+
 
 Route::group(['namespace' => 'App\Http\Controllers\Frontend'], function () {
     Route::get('/', [IndexController::class, 'index'])->name('frontend.index');
     Route::get('/product-details/{slug}', [IndexController::class, 'product_details'])->name('frontend.product_details');
     Route::get('/product-quick-view/{id}/', [IndexController::class, 'quick_view']);
+    Route::get('/campaign-products/{id}/', [IndexController::class, 'frontend_campaign_products'])->name('frontend.campaign.products');
+    Route::get('/campaign-product-details/{slug}/', [IndexController::class, 'campaign_product_details'])->name('campaign.product.details');
+    //currency
+    Route::get('/update_currency-taka', [IndexController::class, 'update_currency_taka'])->name('frontend.currency.taka');
+    Route::get('/update_currency-dollar', [IndexController::class, 'update_currency_dollar'])->name('frontend.currency.dollar');
+    Route::get('/search', [IndexController::class, 'search'])->name('frontend.search');
 
 
     //review and wishlist
@@ -77,10 +87,19 @@ Route::group(['namespace' => 'App\Http\Controllers\Frontend'], function () {
     Route::get('/user-ticket-show/{id}', [ProfileController::class, 'ticket_show'])->name('user.ticket.show');
     Route::get('/user-ticket-delete/{id}', [ProfileController::class, 'ticket_delete'])->name('user.ticket.delete');
     Route::get('/order-details/{id}', [ProfileController::class, 'order_details'])->name('order.details.show');
+    Route::get('/order-list', [ProfileController::class, 'order_list'])->name('user.orderlist');
+    Route::post('/user-profile-image', [ProfileController::class, 'image_add'])->name('user.image.add');
+    Route::post('/user-profile-image-update', [ProfileController::class, 'image_update'])->name('user.image.update');
 
     //payment
     Route::post('/success', [CheckoutController::class, 'success'])->name('success');
     Route::post('/fail', [CheckoutController::class, 'fail'])->name('fail');
+
+    //sociallite
+    Route::get('oauth/{driver}', [LoginController::class, 'redirectToProvider'])->name('social.oauth');
+    Route::get('oauth/{driver}/callback', [LoginController::class, 'handleProviderCallback'])->name('social.callback');
+
+
 });
 
 ?>

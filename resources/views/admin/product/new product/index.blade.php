@@ -1,10 +1,6 @@
 @extends('layouts.admin')
 
 @section('admin_content')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.6.0/bootstrap-tagsinput.css"
-        integrity="sha512-3uVpgbpX33N/XhyD3eWlOgFVAraGn3AfpxywfOTEQeBDByJ/J7HkLvl4mJE1fvArGh4ye1EiPfSBnJo2fgfZmg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
     <style type="text/css">
         .bootstrap-tagsinput .tag {
             background: #428bca;
@@ -139,8 +135,7 @@
                                             <label for="tags" data-role="tagsinput">Tags</label><span
                                                 class="text-danger">
                                                 *</span>
-                                            <input type="tags" value="{{ old('tags') }}" class="form-control"
-                                                name="tags" value="">
+                                                <input type="text" class="form-control" value="{{ old('tags') }}" data-role="tagsinput" name="tags" />
                                         </div>
                                     </div>
                                     <div class="row">
@@ -160,14 +155,24 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="form-group col-lg-6">
+                                        {{-- <div class="form-group col-lg-6">
                                             <label for="exampleInputEmail1">Color</label><br>
                                             <input type="text" class="form-control" value="{{ old('color') }}" data-role="tagsinput" name="color" />
                                         </div>
                                         <div class="form-group col-lg-6">
                                             <label for="size">Size</label><span class="text-danger"> *</span>
                                             <input type="text" class="form-control" value="{{ old('size') }}" data-role="tagsinput" name="size"  />
+                                        </div> --}}
+                                        <div class="form-group col-lg-6">
+                                            <label for="exampleInputEmail1">Color</label><br>
+                                            <input type="text" class="form-control" value="{{ old('color') }}" data-role="tagsinput" name="color" />
                                         </div>
+                                        <div class="form-group col-lg-6">
+                                            <label for="exampleInputPassword1">Size</label><br>
+                                            <input type="text" class="form-control" value="{{ old('size') }}"
+                                                data-role="tagsinput" name="size" />
+                                        </div>
+
                                     </div>
                                     <div class="row">
                                         <div class="form-group col-lg-12">
@@ -249,18 +254,6 @@
             </div>
         </section>
     </div>
-    <script src="https://unpkg.com/@yaireo/tagify"></script>
-    <script src="https://unpkg.com/@yaireo/tagify@3.1.0/dist/tagify.polyfills.min.js"></script>
-    <script>
-        // The DOM element you wish to replace with Tagify
-        var input = document.querySelector('input[name=tags]');
-        var input1 = document.querySelector('input[name=color]');
-        var input2 = document.querySelector('input[name=size]');
-        // initialize Tagify on the above input node reference
-        new Tagify(input)
-        new Tagify(input1)
-        new Tagify(input2)
-    </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Dropify/0.2.2/js/dropify.js"></script>
     <script>

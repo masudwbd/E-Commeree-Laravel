@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 @extends('layouts.app')
 @section('content')
-@include('layouts.frontend_partial.collapse_nav')
+@include('layouts.frontend_partial.main_navbar')
 <link rel="stylesheet" type="text/css" href="{{ asset('frontend') }}/styles/cart_styles.css">
 <link rel="stylesheet" type="text/css" href="{{ asset('frontend') }}/styles/cart_responsive.css">
 	<!-- Cart -->

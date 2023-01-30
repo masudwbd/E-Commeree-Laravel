@@ -28,21 +28,21 @@
         
         $sum_rating = App\Models\Review::where('product_id', $product->id)->sum('rating');
         $count_rating = App\Models\Review::where('product_id', $product->id)->count('rating');
+        $images = json_decode($product->images, true);
+        $colors = explode(',', $product->color, true);
+        $sizes = explode(',', $product->size, true);
+
+        @endphp
+
+    @php
 
     @endphp
-
-
     <!-- Single Product -->
     <div class="single_product" style="padding-bottom: 20px">
         <div class="container">
             <div class="row">
-                @php
-                    $images = json_decode($product->images, true);
-                    $color = explode(',', $product->color);
-                    $sizes = explode(',', $product->size);
-                @endphp
                 <!-- Images -->
-                <div class="col-lg-2 order-lg-1 order-2">
+                <div class="col-lg-2">
                     <ul class="image_list">
                         @foreach ($images as $key => $image)
                             <li data-image="{{ asset('backend/files/products/' . $image) }}"><img
@@ -51,13 +51,13 @@
                     </ul>
                 </div>
 
-                <!-- Selected Image -->
-                <div class="col-lg-3 order-lg-2 order-1">
+                <!-- Selected Image --> 
+                <div class="col-lg-3">
                     <div class="image_selected"><img src="{{ asset($product->thumbnail) }}" alt=""></div>
                 </div>
 
                 <!-- Description -->
-                <div class="col-lg-4 order-3 pr-4">
+                <div class="col-lg-3">
                     <div class="product_description">
                         <div class="product_category">{{ $category->category_name }} > {{ $subcategory->subcategory_name }}
                         </div>
@@ -123,7 +123,7 @@
                                     @endif
                                     <div class="form-group">
                                         <div class="row">
-                                            @isset($product->size)
+                                            @isset($sizes)
                                                 <div class="col-lg-6">
                                                     <label>Pick Size: </label>
                                                     <select class="custom-select form-control-sm" name="size"
@@ -135,13 +135,13 @@
                                                 </div>
                                             @endisset
 
-                                            @isset($product->color)
+                                            @isset($colors)
                                                 <div class="col-lg-6">
                                                     <label>Pick Color: </label>
                                                     <select class="custom-select form-control-sm" name="color"
                                                         style="min-width: 120px;">
-                                                        @foreach ($color as $row)
-                                                            <option value="{{ $row }}">{{ $row }}</option>
+                                                        @foreach ($colors as $row)
+                                                        <option value="{{ $row }}">{{ $row }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -207,7 +207,7 @@
                     </div>
                 </div>
 
-                <div class="col-lg-3 order-3 pl-4" style="border-left:2px solid gray">
+                <div class="col-lg-3" style="border-left:2px solid gray">
                     <div class="pickup_point" style="border-bottom:2px solid gray">
                         <h4>Pickup Point of this porduct</h4>
                         <h5 style="color:red">{{ $pickup_point->pickup_point_name }}</h5>
@@ -231,7 +231,9 @@
                     @endisset
 
                 </div>
-
+                <div class="col-lg-1">
+                    {!! $shareButtons2 !!}
+                </div>
             </div>
         </div>
     </div>
@@ -336,23 +338,23 @@
                         </div>
                         <div class="col-6">
                             <form action="{{ route('review.store') }}">
-                                <div class="form-group">
-                                    <label for="review">Write Your Review</label>
-                                    <textarea name="review" class="form-control" id="" cols="30" rows="4"></textarea>
-                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
-                                </div>
-                                <div class="form-group">
-                                    <select name="rating" class="form-control" style="min-width:150px;margin-left:0px">
-                                        <option selected disabled>Select Rating</option>
-                                        <option value="1">1 Start</option>
-                                        <option value="2">2 Start</option>
-                                        <option value="3">3 Start</option>
-                                        <option value="4">4 Start</option>
-                                        <option value="5">5 Start</option>
-                                    </select>
-                                </div>
                                 @if (Auth::user())
-
+                                    <div class="form-group">
+                                        <label for="review">Write Your Review</label>
+                                        <textarea name="review" class="form-control" id="" cols="30" rows="4"></textarea>
+                                        <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                    </div>
+                                    <div class="form-group">
+                                        <select name="rating" class="form-control" style="min-width:150px;margin-left:0px">
+                                            <option selected disabled>Select Rating</option>
+                                            <option value="1">1 Start</option>
+                                            <option value="2">2 Start</option>
+                                            <option value="3">3 Start</option>
+                                            <option value="4">4 Start</option>
+                                            <option value="5">5 Start</option>
+                                        </select>
+                                    </div>
+                                    <input class="btn btn-success" type="submit" value="sumbit your reveiew">
                                 @else
                                     <small>You have to be logged in to leave a review</small>
                                 @endif
@@ -560,6 +562,7 @@
     </div>
  
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="{{ asset('js/share.js') }}"></script>
 <script type="text/javascript">
     //store coupon ajax call
     $('#add_to_cart_form').submit(function(e){
@@ -581,6 +584,7 @@
       });
     });
   </script> 
+
 
 
 @endsection
